@@ -1,0 +1,16 @@
+services:
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./data/beszel-agent:/var/lib/beszel-agent
+      - ./data/beszel_socket:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      HUB_URL: "${BESZEL_HUB_URL:-http://127.0.0.1:8090}"
+      TOKEN: "${BESZEL_AGENT_TOKEN}"
+      KEY: "${BESZEL_AGENT_KEY}"
+      EXCLUDE_CONTAINERS: "${BESZEL_EXCLUDE_CONTAINERS:-uptime-kuma,beszel,beszel-agent}"
