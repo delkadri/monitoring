@@ -20,21 +20,21 @@ services:
         source: ./data/beszel_socket
         target: /beszel_socket
 
-  # beszel-agent:
-  #   image: henrygd/beszel-agent:latest
-  #   restart: unless-stopped
-  #   network_mode: host
-  #   environment:
-  #     LISTEN: /beszel_socket/beszel.sock
-  #     HUB_URL: ${HUB_URL:?}
-  #     TOKEN: ${BESZEL_AGENT_TOKEN:?}
-  #     KEY: ${BESZEL_AGENT_KEY:?}
-  #     SYSTEM_NAME: ${SYSTEM_NAME:-ovh-vm}
-  #   volumes:
-  #     - type: bind
-  #       source: ./data/beszel-agent
-  #       target: /var/lib/beszel-agent
-  #     - type: bind
-  #       source: ./data/beszel_socket
-  #       target: /beszel_socket
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      HUB_URL: ${HUB_URL:?}
+      TOKEN: ${BESZEL_AGENT_TOKEN:?}
+      KEY: ${BESZEL_AGENT_KEY:?}
+      SYSTEM_NAME: ${SYSTEM_NAME:-ovh-vm}
+    volumes:
+      - type: bind
+        source: ./data/beszel-agent
+        target: /var/lib/beszel-agent
+      - type: bind
+        source: ./data/beszel_socket
+        target: /beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
